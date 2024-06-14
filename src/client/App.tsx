@@ -3,7 +3,7 @@ import routes from '~/routes';
 import { Game } from '~/types';
 import GameBoard from './GameBoard';
 import axios from 'axios';
-import { getGame, sendMove, sendNewGameRequest } from './gameServer';
+import { createUser, getAllGames, requestJoinGame, sendMove, sendNewGameRequest } from './gameServer';
 
 const POLL_INTERVAL = 2500;
 
@@ -18,12 +18,14 @@ function App() {
   const [selectedCell, setSelectedCell] = useState<number | null>(null);
   const [poller, setPoller] = useState<number>(0);
   const [view, setView] = useState<View>(View.GAMES);
+  const [userId, setUserId] = useState<string>('');
 
+  // Polling
   useEffect(() => {
     switch (view) {
       case View.GAMES:
-        axios.get(`${routes.games}`)
-          .then(res => setGameIds(res.data));
+        getAllGames()
+          .then(games => setGameIds(games));
         break;
 
       case View.GAME:
@@ -41,7 +43,10 @@ function App() {
       game?.board[position] !== null && setSelectedCell(position);
       return
     }
-    game?.id && sendMove(game?.id, selectedCell, position);
+    if (game) {
+      sendMove(game?.id, selectedCell, position)
+        .then(res => setGame(res));
+    }
     setSelectedCell(null);
   }
 
@@ -49,11 +54,14 @@ function App() {
     sendNewGameRequest();
   }
 
-  const makeGameActive = (gameId: string) => {
-    getGame(gameId)
+  const joinGame = (gameId: string) => {
+    requestJoinGame(gameId, userId)
       .then(res => {
-        res && setGame(res);
-        setView(View.GAME);
+        if (res.message) console.log(res.message);
+        else if (res.game) {
+          setGame(res.game);
+          setView(View.GAME);
+        }
     });
   }
 
@@ -62,7 +70,7 @@ function App() {
     { view === View.GAMES &&
       <>
         {gameIds.map(gameId => 
-          <div key={gameId} onClick={() => makeGameActive(gameId)} className='select-none'>
+          <div key={gameId} onClick={() => joinGame(gameId)} className='select-none'>
             Game {gameId}
           </div>
         )}
@@ -72,6 +80,7 @@ function App() {
     { view === View.GAME &&
       <>
         { game !== null && <GameBoard game={game} cellClicked={cellClicked} selectedCell={selectedCell} /> }
+        <div>Players: {game?.players.join(', ')}</div>
         <button onClick={() => setView(View.GAMES)}>home.</button>
       </>
     }
