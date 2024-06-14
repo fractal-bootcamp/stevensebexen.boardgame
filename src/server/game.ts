@@ -10,9 +10,9 @@ interface GameToken {
   imageUrl: string;
 }
 
-const tokens = {
-  'default': { imageUrl: '' }
-}
+// const tokens = {
+//   'default': { imageUrl: '' }
+// }
 
 const createBoard = (): Board => ({ cells: Array(64).fill(null) });
 export const createGameState = (): GameState => ({ board: createBoard() });
