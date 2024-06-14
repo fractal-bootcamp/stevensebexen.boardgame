@@ -6,6 +6,7 @@ interface GameBoardProps {
   selectedCell: number | null
 }
 
+// Controlled representation of game board
 const GameBoard = (props: GameBoardProps) => {
   return (
     <div className='flex flex-row flex-wrap w-[576px]'>
