@@ -6,7 +6,7 @@ const tokens = {
 }
 
 export const createBoard = (): Board => Array(BOARD_SIZE).fill(null);
-export const createGameState = (): Game => ({ board: createBoard() });
+export const createGameState = (id: string): Game => ({ id, board: createBoard() });
 
 export const moveToken = (game: Game, source: number, destination: number): Game => {
   if (source < 0 || destination < 0 || source >= BOARD_SIZE || destination == BOARD_SIZE) {
