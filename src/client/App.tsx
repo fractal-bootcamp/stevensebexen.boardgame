@@ -3,7 +3,7 @@ import routes from '~/routes';
 import { Game } from '~/types';
 import GameBoard from './GameBoard';
 import axios from 'axios';
-import { createUser, requestJoinGame, sendMove, sendNewGameRequest } from './gameServer';
+import { createUser, getAllGames, requestJoinGame, sendMove, sendNewGameRequest } from './gameServer';
 
 const POLL_INTERVAL = 2500;
 
@@ -24,8 +24,8 @@ function App() {
   useEffect(() => {
     switch (view) {
       case View.GAMES:
-        axios.get(`${routes.games}`)
-          .then(res => setGameIds(res.data));
+        getAllGames()
+          .then(games => setGameIds(games));
         break;
 
       case View.GAME:
@@ -49,7 +49,9 @@ function App() {
       game?.board[position] !== null && setSelectedCell(position);
       return
     }
-    game?.id && sendMove(game?.id, selectedCell, position);
+    if (game) {
+      const game0 = sendMove(game?.id, selectedCell, position);
+    }
     setSelectedCell(null);
   }
 

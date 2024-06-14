@@ -41,6 +41,7 @@ export const postMoveHandler = (req: Request, res: Response) => {
 
   const game0 = applyMove(game, moveInfo.source, moveInfo.destination);
   updateGame(game0);
+  res.json(game0);
 }
 
 // POST /users
