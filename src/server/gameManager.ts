@@ -1,9 +1,10 @@
-import { GameState, createGameState } from './game';
+import { createGameState, placeDefaultTokens } from './game';
+import { Game } from "~/types";
 
-const games: { [key: string]: GameState } = {
-  'abc': createGameState()
-}
+const games: { [key: string]: Game } = {
+  'abc': placeDefaultTokens(createGameState())
+};
 
-const getGame = (id: string): GameState | null => games[id] || null;
+const getGame = (id: string): Game | null => games[id] || null;
 
 export default { getGame };
