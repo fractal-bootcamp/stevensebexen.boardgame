@@ -1,5 +1,6 @@
 import express, { NextFunction, Request, Response } from 'express';
 import { createGameHandler, createUserHandler, getGameHandler, getGamesHandler, joinGameHandler, postMoveHandler } from './endpoints';
+import cookieParser from 'cookie-parser';
 
 // Init
 const app = express();
@@ -14,6 +15,7 @@ app.use((_: Request, res: Response, next: NextFunction) => {
   
     next();
 })
+app.use(cookieParser());
 app.use(express.json());
 
 // Endpoints
