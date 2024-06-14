@@ -7,7 +7,7 @@ const createGameHandler = (req: Request, res: Response) => {
   const id = crypto.randomBytes(16).toString('hex');
   const game = createDefaultGame(id);
   createGame(game);
-  res.send('Successfully created game.')
+  res.json({ message: 'Successfully created game.', id: game.id });
 }
 
 export default createGameHandler;
