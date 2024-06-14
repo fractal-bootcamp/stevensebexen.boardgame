@@ -1,8 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express';
-import getGameHandler from './getGameHandler';
-import postMoveHandler from './postMoveHandler';
-import getGamesHandler from './getGamesHandler';
-import createGameHandler from './createGameHandler';
+import { createGameHandler, createUserHandler, getGameHandler, getGamesHandler, joinGameHandler, postMoveHandler } from './endpoints';
 
 // Init
 const app = express();
@@ -25,7 +22,9 @@ app.get('/games/:id', getGameHandler);
 app.get('/games', getGamesHandler)
 
 app.post('/games/:id/move', postMoveHandler);
+app.post('/games/:id/join', joinGameHandler);
 app.post('/games', createGameHandler)
+app.post('/user', createUserHandler);
 
 // Listen
 app.listen(PORT, () => { console.log(`Server listening on port ${PORT}.`)});

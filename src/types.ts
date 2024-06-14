@@ -1,4 +1,5 @@
 export interface Game {
+  players: string[]
   id: string
   board: Board;
 }
@@ -10,3 +11,6 @@ export interface GameToken {
   image: string;
 }
 
+export interface User {
+  id: string;
+}

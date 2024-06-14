@@ -3,7 +3,7 @@ import routes from '~/routes';
 import { Game } from '~/types';
 import GameBoard from './GameBoard';
 import axios from 'axios';
-import { getGame, sendMove, sendNewGameRequest } from './gameServer';
+import { createUser, requestJoinGame, sendMove, sendNewGameRequest } from './gameServer';
 
 const POLL_INTERVAL = 2500;
 
@@ -18,7 +18,9 @@ function App() {
   const [selectedCell, setSelectedCell] = useState<number | null>(null);
   const [poller, setPoller] = useState<number>(0);
   const [view, setView] = useState<View>(View.GAMES);
+  const [userId, setUserId] = useState<string>('');
 
+  // Polling
   useEffect(() => {
     switch (view) {
       case View.GAMES:
@@ -36,6 +38,12 @@ function App() {
     setTimeout(() => setPoller(poller + 1), POLL_INTERVAL);
   }, [poller])
 
+  // Assign user id
+  useEffect(() => {
+    createUser()
+      .then(res => setUserId(res.id));
+  }, []);
+
   const cellClicked = (position: number): void => {
     if (selectedCell === null) {
       game?.board[position] !== null && setSelectedCell(position);
@@ -49,10 +57,10 @@ function App() {
     sendNewGameRequest();
   }
 
-  const makeGameActive = (gameId: string) => {
-    getGame(gameId)
-      .then(res => {
-        res && setGame(res);
+  const joinGame = (gameId: string) => {
+    requestJoinGame(gameId, userId)
+      .then(game => {
+        setGame(game);
         setView(View.GAME);
     });
   }
@@ -62,7 +70,7 @@ function App() {
     { view === View.GAMES &&
       <>
         {gameIds.map(gameId => 
-          <div key={gameId} onClick={() => makeGameActive(gameId)} className='select-none'>
+          <div key={gameId} onClick={() => joinGame(gameId)} className='select-none'>
             Game {gameId}
           </div>
         )}

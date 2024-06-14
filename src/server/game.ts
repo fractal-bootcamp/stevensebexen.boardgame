@@ -20,7 +20,7 @@ const moveToken = (board: Board, source: number, destination: number) =>
   );
 
 // GameState
-export const createGame = (id: string): Game => ({ id, board: createBoard() });
+const createGame = (id: string): Game => ({ id, board: createBoard(), players: [] });
 
 export const createDefaultGame = (id: string): Game => {
   const game = placeDefaultTokens(createGame(id));
