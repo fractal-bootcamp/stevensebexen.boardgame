@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
-import gameManager from "./gameManager";
+import { getGame, updateGame } from "./gameManager";
 import { applyMove } from "./game";
 
 // games/:id/move
 const postMoveHandler = (req: Request, res: Response) => {
-  const game = gameManager.getGame(req.params.id);
+  const game = getGame(req.params.id);
   if (!game) {
     res.status(404).send('Game not found');
     return;
@@ -17,7 +17,7 @@ const postMoveHandler = (req: Request, res: Response) => {
   }
 
   const game0 = applyMove(game, moveInfo.source, moveInfo.destination);
-  gameManager.updateGame(game0);
+  updateGame(game0);
 }
 
 export default postMoveHandler;

@@ -1,17 +1,22 @@
-import { createGameState, placeDefaultTokens } from './game';
 import { Game } from "~/types";
 
-const games: Array<Game> = [
-  placeDefaultTokens(createGameState('abc'))
-]
+// Faked game DB
+const games: Array<Game> = []
 
-const getGame = (id: string): Game | undefined => games.find(g => g.id === id);
+export const getGame = (id: string): Game | undefined => games.find(g => g.id === id);
+export const getAllGames = () => games;
 
-const updateGame = (game0: Game): void => {
-  const game = getGame(game0.id);
-  if (game === undefined) return;
-
-  Object.assign(game, game0);
+export const createGame = (game: Game): Game => {
+  games.push(game);
+  return game;
 }
 
-export default { getGame, updateGame };
+export const updateGame = (game0: Game): Game | undefined => {
+  const game = getGame(game0.id);
+  if (game === undefined) return undefined;
+
+  Object.assign(game, game0);
+  return game;
+}
+
+export default 0;

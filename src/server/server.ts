@@ -1,6 +1,8 @@
 import express, { NextFunction, Request, Response } from 'express';
 import getGameHandler from './getGameHandler';
 import postMoveHandler from './postMoveHandler';
+import getGamesHandler from './getGamesHandler';
+import createGameHandler from './createGameHandler';
 
 // Init
 const app = express();
@@ -20,8 +22,10 @@ app.use(express.json());
 // Endpoints
 app.get('/', (_, res) => { res.json({hello: 'hi'}) });
 app.get('/games/:id', getGameHandler);
+app.get('/games', getGamesHandler)
 
 app.post('/games/:id/move', postMoveHandler);
+app.post('/games', createGameHandler)
 
 // Listen
 app.listen(PORT, () => { console.log(`Server listening on port ${PORT}.`)});
