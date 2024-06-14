@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="72"
+   height="72"
+   viewBox="0 0 158.75 158.75"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4-beta (62f545ba, 2024-04-22)"
+   sodipodi:docname="default.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="0.87585214"
+     inkscape:cx="372.77982"
+     inkscape:cy="301.99161"
+     inkscape:window-width="1920"
+     inkscape:window-height="1080"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <ellipse
+       style="fill:#f7f7f7;stroke-width:1.05833333;fill-opacity:1;stroke:#000000;stroke-opacity:1;stroke-dasharray:none"
+       id="path1"
+       cx="79.901947"
+       cy="80.657166"
+       rx="64.495522"
+       ry="62.229874"
+       inkscape:label="path1" />
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.721133;stroke-dasharray:none;stroke-opacity:1"
+       id="rect1"
+       width="3.9271281"
+       height="42.594234"
+       x="47.729706"
+       y="41.990059" />
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.713526;stroke-dasharray:none;stroke-opacity:1"
+       id="rect2"
+       width="3.0208673"
+       height="43.802578"
+       x="101.19907"
+       y="43.500492" />
+    <path
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.54888;stroke-dasharray:none;stroke-opacity:1"
+       d="m 48.333882,107.00252 c 25.979461,23.26068 42.292148,13.22802 65.552828,-0.0638 -26.583637,36.18624 -67.667436,8.22014 -65.552828,0.0638 z"
+       id="path2"
+       inkscape:label="path2"
+       sodipodi:nodetypes="ccc" />
+  </g>
+</svg>

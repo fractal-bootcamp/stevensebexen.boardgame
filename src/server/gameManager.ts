@@ -1,9 +1,17 @@
-import { GameState, createGameState } from './game';
+import { createGameState, placeDefaultTokens } from './game';
+import { Game } from "~/types";
 
-const games: { [key: string]: GameState } = {
-  'abc': createGameState()
+const games: Array<Game> = [
+  placeDefaultTokens(createGameState('abc'))
+]
+
+const getGame = (id: string): Game | undefined => games.find(g => g.id === id);
+
+const updateGame = (game0: Game): void => {
+  const game = getGame(game0.id);
+  if (game === undefined) return;
+
+  Object.assign(game, game0);
 }
 
-const getGame = (id: string): GameState | null => games[id] || null;
-
-export default { getGame };
+export default { getGame, updateGame };
