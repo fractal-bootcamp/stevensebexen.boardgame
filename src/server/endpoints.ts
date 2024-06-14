@@ -18,7 +18,7 @@ const checkOrCreateUser = (req: Request, res: Response): string => {
 export const createGameHandler = (req: Request, res: Response) => {
   checkOrCreateUser(req, res);
   const game = createGame();
-  res.json({ message: 'Successfully created game', gameId: game.id });
+  res.json({ message: 'Successfully created game', game });
 }
 
 // GET /games/:id
@@ -41,6 +41,7 @@ export const getGamesHandler = (req: Request, res: Response) => {
 
 // POST /games/:id/move
 export const postMoveHandler = (req: Request, res: Response) => {
+  console.log(req.method);
   checkOrCreateUser(req, res);
   const game = getGame(req.params.id);
   if (!game) {
@@ -68,6 +69,7 @@ export const createUserHandler = (_: Request, res: Response) => {
 // POST /games/:id/join
 export const joinGameHandler = (req: Request, res: Response) => {
   const gameId = req.params.id;
+  console.log(req.cookies);
   const userId = checkOrCreateUser(req, res);
   
   const game = getGame(gameId);

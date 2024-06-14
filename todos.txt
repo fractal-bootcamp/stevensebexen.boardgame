@@ -1,0 +1,10 @@
+Backend
+- Player leaving should cause them to leave game.
+- Server should notice timeouts on player (when their polling stops for X)
+-- Empty game should be deleted.
+- Player should only be able to join game not in progress.
+
+Game Logic
+- Turn player should be tracked.
+- Units need battle logic.
+- Board needs resource and recruitment.
