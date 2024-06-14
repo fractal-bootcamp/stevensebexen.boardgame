@@ -3,14 +3,27 @@ import { applyMove } from "./game";
 import { addPlayerToGame, createGame, getAllGames, getGame, updateGame } from "./gameManager";
 import { createUser } from "./userManager";
 
+const checkOrCreateUser = (req: Request, res: Response): string => {
+  if (!req.cookies || !req.cookies['userId']) {
+    const user = createUser();
+    res.cookie('userId', user.id);
+    return user.id;
+  }
+  else {
+    return req.cookies.userId;
+  }
+}
+
 // POST /games
-export const createGameHandler = (_: Request, res: Response) => {
+export const createGameHandler = (req: Request, res: Response) => {
+  checkOrCreateUser(req, res);
   const game = createGame();
   res.json({ message: 'Successfully created game', gameId: game.id });
 }
 
 // GET /games/:id
 export const getGameHandler = (req: Request, res: Response) => {
+  checkOrCreateUser(req, res);
   const id = req.params.id;
   if (!id || !getGame(id)) {
     res.status(404).send(`Game with id ${id} not found.`);
@@ -21,12 +34,14 @@ export const getGameHandler = (req: Request, res: Response) => {
 }
 
 // GET /games
-export const getGamesHandler = (_: Request, res: Response) => {
+export const getGamesHandler = (req: Request, res: Response) => {
+  checkOrCreateUser(req, res);
   res.json(getAllGames().map(game => game.id));
 }
 
 // POST /games/:id/move
 export const postMoveHandler = (req: Request, res: Response) => {
+  checkOrCreateUser(req, res);
   const game = getGame(req.params.id);
   if (!game) {
     res.status(404).send('Game not found');
@@ -47,23 +62,23 @@ export const postMoveHandler = (req: Request, res: Response) => {
 // POST /users
 export const createUserHandler = (_: Request, res: Response) => {
   const user = createUser();
-  res.json(user);
+  res.cookie('userId', user.id).json({ message: 'Success' });
 }
 
 // POST /games/:id/join
 export const joinGameHandler = (req: Request, res: Response) => {
   const gameId = req.params.id;
-  const userId = req.body.userId;
+  const userId = checkOrCreateUser(req, res);
   
   const game = getGame(gameId);
   if (!game) {
-    res.status(404).send('Game not found');
+    res.status(404).json({ message: `Game ${gameId} not found.` });
     return;
   }
   if (game.players.length >= 2) {
-    res.send('That game is full');
+    res.json({ message: `Game ${gameId} is full.` });
     return;
   }
   addPlayerToGame(userId, gameId);
-  res.json(game);
+  res.json({ game });
 }

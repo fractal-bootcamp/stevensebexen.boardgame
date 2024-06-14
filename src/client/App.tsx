@@ -38,19 +38,14 @@ function App() {
     setTimeout(() => setPoller(poller + 1), POLL_INTERVAL);
   }, [poller])
 
-  // Assign user id
-  useEffect(() => {
-    createUser()
-      .then(res => setUserId(res.id));
-  }, []);
-
   const cellClicked = (position: number): void => {
     if (selectedCell === null) {
       game?.board[position] !== null && setSelectedCell(position);
       return
     }
     if (game) {
-      const game0 = sendMove(game?.id, selectedCell, position);
+      sendMove(game?.id, selectedCell, position)
+        .then(res => setGame(res));
     }
     setSelectedCell(null);
   }
@@ -61,9 +56,12 @@ function App() {
 
   const joinGame = (gameId: string) => {
     requestJoinGame(gameId, userId)
-      .then(game => {
-        setGame(game);
-        setView(View.GAME);
+      .then(res => {
+        if (res.message) console.log(res.message);
+        else if (res.game) {
+          setGame(res.game);
+          setView(View.GAME);
+        }
     });
   }
 
@@ -82,6 +80,7 @@ function App() {
     { view === View.GAME &&
       <>
         { game !== null && <GameBoard game={game} cellClicked={cellClicked} selectedCell={selectedCell} /> }
+        <div>Players: {game?.players.join(', ')}</div>
         <button onClick={() => setView(View.GAMES)}>home.</button>
       </>
     }

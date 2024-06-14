@@ -24,7 +24,11 @@ export const createUser = async (): Promise<User> => {
   return user.data;
 }
 
-export const requestJoinGame = async (gameId: string, userId: string): Promise<Game> => {
+interface JoinGameResponse {
+  game?: Game
+  message?: string
+}
+export const requestJoinGame = async (gameId: string, userId: string): Promise<JoinGameResponse> => {
   const game = await axios.post(`${routes.games}/${gameId}/join`, { userId });
   return game.data;
 }
