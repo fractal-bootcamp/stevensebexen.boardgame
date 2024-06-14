@@ -5,8 +5,8 @@ import { createUser } from "./userManager";
 
 // POST /games
 export const createGameHandler = (_: Request, res: Response) => {
-  createGame();
-  res.send('Successfully created game.')
+  const game = createGame();
+  res.json({ message: 'Successfully created game', gameId: game.id });
 }
 
 // GET /games/:id
