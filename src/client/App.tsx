@@ -3,7 +3,7 @@ import routes from '~/routes';
 import { Game } from '~/types';
 import GameBoard from './GameBoard';
 import axios from 'axios';
-import { createUser, getAllGames, requestJoinGame, sendMove, sendNewGameRequest } from './gameServer';
+import { getAllGames, getGame, requestJoinGame, sendMove, sendNewGameRequest } from './gameServer';
 
 const POLL_INTERVAL = 2500;
 
@@ -18,7 +18,6 @@ function App() {
   const [selectedCell, setSelectedCell] = useState<number | null>(null);
   const [poller, setPoller] = useState<number>(0);
   const [view, setView] = useState<View>(View.GAMES);
-  const [userId, setUserId] = useState<string>('');
 
   // Polling
   useEffect(() => {
@@ -30,8 +29,8 @@ function App() {
 
       case View.GAME:
         if (!game) break;
-        axios.get(`${routes.games}/${game.id}`)
-          .then(res => setGame(res.data));
+        getGame(game.id)
+          .then(res => setGame(res));
         break;
     }
     
@@ -51,16 +50,27 @@ function App() {
   }
 
   const newGame = () => {
-    sendNewGameRequest();
+    sendNewGameRequest()
+      .then(res => {
+        if (res.game) {
+          setGame(res.game);
+          setView(View.GAME);
+        }
+        else {
+          console.log(res.message);
+        }
+      });
   }
 
   const joinGame = (gameId: string) => {
-    requestJoinGame(gameId, userId)
+    requestJoinGame(gameId)
       .then(res => {
-        if (res.message) console.log(res.message);
-        else if (res.game) {
+        if (res.game) {
           setGame(res.game);
           setView(View.GAME);
+        }
+        else {
+          console.log(res.message);
         }
     });
   }
