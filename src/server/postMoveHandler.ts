@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 import gameManager from "./gameManager";
-import { moveToken } from "./game";
+import { applyMove } from "./game";
 
+// games/:id/move
 const postMoveHandler = (req: Request, res: Response) => {
   const game = gameManager.getGame(req.params.id);
   if (!game) {
@@ -15,7 +16,7 @@ const postMoveHandler = (req: Request, res: Response) => {
     return;
   }
 
-  const game0 = moveToken(game, moveInfo.source, moveInfo.destination);
+  const game0 = applyMove(game, moveInfo.source, moveInfo.destination);
   gameManager.updateGame(game0);
 }
 

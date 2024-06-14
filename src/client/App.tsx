@@ -5,18 +5,22 @@ import GameBoard from './GameBoard';
 import axios from 'axios';
 import gameServer from './gameServer';
 
+const POLL_INTERVAL = 2500;
+
 function App() {
   const [game, setGame] = useState<Game | null>(null);
   const [selectedCell, setSelectedCell] = useState<number | null>(null);
   const [poller, setPoller] = useState<number>(0);
 
+  // Long polling
   useEffect(() => {
     axios.get(`${routes.games}/abc`)
       .then(res => setGame(res.data));
     
-    setTimeout(() => setPoller(poller + 1), 1000);
+    setTimeout(() => setPoller(poller + 1), POLL_INTERVAL);
   }, [poller])
 
+  // Cell clicked handler
   const cellClicked = (position: number): void => {
     if (selectedCell === null) {
       game?.board[position] !== null && setSelectedCell(position);

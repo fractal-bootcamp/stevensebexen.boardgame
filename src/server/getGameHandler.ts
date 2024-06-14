@@ -1,6 +1,7 @@
 import { Request, Response } from "express"
 import gameManager from "./gameManager";
 
+// /games/:id
 const getGameHandler = (req: Request, res: Response) => {
   const id = req.params.id;
   if (!id || !gameManager.getGame(id)) {
