@@ -9,7 +9,7 @@ function App() {
   useEffect(() => {
     fetch(`${routes.games}/abc`)
       .then(res => res.json())
-      .then(res => console.log(res));
+      .then(res => setGame(res));
   }, [])
 
   return (

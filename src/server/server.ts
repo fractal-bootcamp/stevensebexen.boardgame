@@ -14,7 +14,7 @@ app.use((_: Request, res: Response, next: NextFunction) => {
 })
 app.use(express.json());
 
-app.get('/', (req, res) => { res.json({hello: 'hi'}) });
+app.get('/', (_, res) => { res.json({hello: 'hi'}) });
 app.get('/games/:id', getGameHandler);
 
 app.listen(PORT, () => { console.log(`Server listening on port ${PORT}.`)});

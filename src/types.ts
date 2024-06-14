@@ -5,6 +5,6 @@ export interface Game {
 export type Board = Array<GameToken | null>;
 
 export interface GameToken {
-  imageUrl: string;
+  image: string;
 }
 

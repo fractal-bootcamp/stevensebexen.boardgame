@@ -2,7 +2,7 @@ import { Board, Game } from "~/types";
 import { BOARD_SIZE } from "~/constants";
 
 const tokens = {
-  'default': { imageUrl: 'default.svg' }
+  'default': 'tokens/default.svg'
 }
 
 export const createBoard = (): Board => Array(BOARD_SIZE).fill(null);
@@ -30,6 +30,6 @@ export const moveToken = (game: Game, source: number, destination: number): Game
 }
 
 export const placeDefaultTokens = (gameState: Game): Game => {
-  const board: Board = Array(64).fill(null).map((cell, index) => (index <= 7 || index >= 57) ? tokens.default : cell);
+  const board: Board = Array(64).fill(null).map((cell, index) => (index <= 7 || index >= 56) ? { image: tokens.default } : cell);
   return { ...gameState, board };
 }
